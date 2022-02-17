@@ -1,0 +1,41 @@
+{{if  .Values.gatewaybridge.service.enable }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-bridge
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "chirpstack.matchLabels" . | nindent 6 }}
+      app: gateway-bridge
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gateway-bridge
+        {{- include "chirpstack.template.labels" . | nindent 8 }}
+    spec:
+{{- if .Values.chirpstack.common.nodeSelector.enabled }}
+      nodeSelector:
+        {{- include "chirpstack.nodeSelector" . | nindent 8 }}
+{{- end }}
+      terminationGracePeriodSeconds: 30
+      initContainers:
+      - name: wait-mqtt
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Values.mosquitto.service.name }}; do echo waiting for mqtt; sleep 2; done;']
+      containers:
+      - name: gateway-bridge
+        image: chirpstack/chirpstack-gateway-bridge:3
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: configfile
+          mountPath: /etc/chirpstack-gateway-bridge
+      volumes:
+      - name: configfile
+        configMap:
+          name:  {{ .Release.Name}}-gb-configmap
+          
+{{end}}

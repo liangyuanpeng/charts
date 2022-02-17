@@ -1,0 +1,63 @@
+{{- if .Values.pulsar.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: pulsar
+  labels:
+    app: pulsar
+spec:
+  ports:
+    - port: 6650
+      name: pulsar
+    - port: 8080
+      name: pulsar-admin
+  type: ClusterIP
+  selector:
+    app: pulsar
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pulsar
+  labels:
+    app: pulsar
+spec:
+  selector:
+    matchLabels: 
+      app: pulsar
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pulsar
+    spec:
+      volumes:
+      - name: configmap 
+        configMap:
+          name: pulsar-configmap
+      - name: protocols
+        emptyDir: {}
+      containers:
+        - name: pulsar
+          image: apachepulsar/pulsar:2.9.1
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: protocols
+              mountPath: "/pulsar/protocols"
+          ports:
+            - name: pulsar
+              containerPort: 6650
+              protocol: TCP
+            - name: pulsar-admin 
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: PULSAR_MEM
+              value: "-Xms64m -Xmx256m -XX:MaxDirectMemorySize=256m"
+            - name: PULSAR_PREFIX_functionWorkerEnabled
+              value: "false"
+          command:
+            - sh
+            - -c
+          args: ["bin/apply-config-from-env.py conf/client.conf && bin/apply-config-from-env.py conf/standalone.conf && bin/pulsar standalone -nfw -nss"]
+{{- end }}

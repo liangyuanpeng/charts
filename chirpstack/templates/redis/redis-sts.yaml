@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-redis
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      release: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}-{{ .Values.redis.service.name | default "redis"  }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        release: {{ .Release.Name }}
+    spec:
+{{- if .Values.chirpstack.common.nodeSelector.enabled }}
+      nodeSelector:
+        {{- include "chirpstack.nodeSelector" . | nindent 8 }}
+{{- end }}
+      terminationGracePeriodSeconds: 30 #default 30
+      containers:
+      - name: redis
+        image: {{ .Values.redis.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379
+          name: redis
+        volumeMounts:
+        - name: redis-pvc
+          mountPath: /data
+#          subPath: postgres
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-pvc
+    spec:
+      accessModes: {{ .Values.redis.spec.volumeClaimTemplates.spec.accessModes }}
+      storageClassName: {{ .Values.redis.spec.volumeClaimTemplates.spec.storageClassName }}
+      resources:
+        requests:
+          storage: {{ .Values.redis.spec.volumeClaimTemplates.spec.resources.requests.storage }}

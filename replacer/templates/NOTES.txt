@@ -1,0 +1,3 @@
+Now,just enjoy replacer.
+  现在,可以尽情的享受拜托无法访问gcr.io/k8s.gcr.io的困扰了!
+  

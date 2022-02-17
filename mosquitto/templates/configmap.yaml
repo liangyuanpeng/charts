@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-configmap
+data:
+  mosquitto.conf: |
+    #pid_file /var/run/mosquitto.pid
+    persistence true # port 1883
+    persistence_location /var/lib/mosquitto
+    #log_dest  file /var/log/mosquitto/mosquitto.log
+    log_type all #include_dir /etc/mosquitto/conf.d
+    listener  8883 
+    allow_anonymous true    
+    require_certificate false 
+    use_identity_as_username false

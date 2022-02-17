@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-as
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chirpstack.standardLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: chirpstack-as
+      {{- include "chirpstack.matchLabels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chirpstack-as
+        {{- include "chirpstack.template.labels" . | nindent 8 }}
+    spec:
+{{- if .Values.chirpstack.common.nodeSelector.enabled }}
+      nodeSelector:
+        {{- include "chirpstack.nodeSelector" . | nindent 8 }}
+{{- end }}
+      terminationGracePeriodSeconds: 30
+      initContainers:
+      - name: wait-redis
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-{{ .Values.redis.service.name | default "redis"  }}; do echo waiting for redis; sleep 2; done;']
+      - name: wait-mqtt
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-{{ .Values.mosquitto.service.name | default "mosquitto"  }}; do echo waiting for mqtt; sleep 2; done;']
+      - name: wait-postgresql
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-{{ .Values.postgresql.service.name | default "pgsql"  }}; do echo waiting for postgresql; sleep 2; done;']
+      containers:
+      - name: chirpstack-as
+        image: {{ .Values.appserver.image }}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: configfile
+          mountPath: /etc/chirpstack-application-server
+        ports:
+        - name: chirpstack-as
+          containerPort: 8080
+      volumes:
+      - name: configfile
+        configMap:
+          name:  {{ .Release.Name}}-as-configmap

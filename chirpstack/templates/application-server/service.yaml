@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.appserver.service.name | default "chirpstack-as"  }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chirpstack.matchLabels" . | nindent 4 }}
+spec:
+  ports:
+    - port: 8080
+      name: chirpstack-as
+    - port: 8001
+      name: chirpstack-as-8001
+    - port: 8003
+      name: chirpstack-as-join
+  type: ClusterIP
+  selector:
+    app: chirpstack-as
+    # {{- include "chirpstack.matchLabels" . | nindent 4 }}

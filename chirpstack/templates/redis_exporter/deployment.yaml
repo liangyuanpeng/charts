@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-redis-exporter
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: redis-exporter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-exporter
+    spec:
+{{- if .Values.chirpstack.common.nodeSelector.enabled }}
+      nodeSelector:
+        {{- include "chirpstack.nodeSelector" . | nindent 8 }}
+{{- end }}
+      terminationGracePeriodSeconds: 30
+      initContainers:
+        - name: wait-redis
+          image: busybox:1.31
+          imagePullPolicy: IfNotPresent
+          command: [ 'sh', '-c', 'until nslookup {{ .Release.Name }}-{{ .Values.redis.service.name | default "redis"  }}; do echo waiting for redis; sleep 2; done;' ]
+      containers:
+      - name: redis-exporter
+        image: {{ .Values.exporter.redis.image }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: redishost
+          value: {{ .Release.Name }}-{{ .Values.redis.service.name | default "redis"  }}

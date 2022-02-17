@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-pgsql
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: pgsql
+      release: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}-{{ .Values.postgresql.service.name | default "pgsql"  }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pgsql
+        release: {{ .Release.Name }}
+    spec:
+{{- if .Values.chirpstack.common.nodeSelector.enabled }}
+      nodeSelector:
+        {{- include "chirpstack.nodeSelector" . | nindent 8 }}
+{{- end }}
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: pgsql
+        image: {{ .Values.postgresql.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+          name: pgsql
+        envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-postgres-config
+        volumeMounts:
+        - name: pginit
+          mountPath: /docker-entrypoint-initdb.d
+        - name: pgsql-pvc
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres2
+      volumes:
+      - name: pginit
+        configMap:
+          name: {{ .Release.Name }}-postgres-init
+  volumeClaimTemplates:
+  - metadata:
+      name: pgsql-pvc
+    spec:
+      accessModes: {{ .Values.postgresql.spec.volumeClaimTemplates.spec.accessModes }} #["ReadWriteOnce"]
+      storageClassName: {{ .Values.postgresql.spec.volumeClaimTemplates.spec.storageClassName }}
+      resources:
+        requests:
+          storage: {{ .Values.postgresql.spec.volumeClaimTemplates.spec.resources.requests.storage }}

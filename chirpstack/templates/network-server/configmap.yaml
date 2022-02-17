@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name}}-ns-configmap
+  namespace: {{ .Release.Namespace }}
+data:
+  chirpstack-network-server.toml: |
+    # See https://www.chirpstack.io/network-server/install/config/ for a full
+    # configuration example and documentation.
+    #
+    # This file is for the EU868 band. See the examples/ folder for more
+    # configuration examples.
+    # pgsql-0.pgsql.default.svc.cluster.local
+
+    [postgresql]
+    dsn="postgres://chirpstack_ns:chirpstack_ns@{{ .Release.Name }}-{{ .Values.postgresql.service.name | default "pgsql"  }}.{{ .Release.Namespace }}/chirpstack_ns?sslmode=disable"
+
+    [redis]
+    url="redis://{{ .Release.Name }}-{{ .Values.redis.service.name | default "redis"  }}.{{ .Release.Namespace }}:6379"
+
+    [network_server]
+    net_id="000000"
+
+    [network_server.band]
+    name="CN_470_510"
+
+    [network_server.network_settings]
+      # [[network_server.network_settings.extra_channels]]
+      # frequency=867100000
+      # min_dr=0
+      # max_dr=5
+
+      # [[network_server.network_settings.extra_channels]]
+      # frequency=867300000
+      # min_dr=0
+      # max_dr=5
+
+      # [[network_server.network_settings.extra_channels]]
+      # frequency=867500000
+      # min_dr=0
+      # max_dr=5
+
+      # [[network_server.network_settings.extra_channels]]
+      # frequency=867700000
+      # min_dr=0
+      # max_dr=5
+
+      # [[network_server.network_settings.extra_channels]]
+      # frequency=867900000
+      # min_dr=0
+      # max_dr=5
+
+    [network_server.gateway.backend.mqtt]
+    server="tcp://{{ .Release.Name }}-{{ .Values.mosquitto.service.name | default "mosquitto"  }}.{{ .Release.Namespace }}:1883"
+
+    [metrics]
+    timezone="Local"
+
+      [metrics.redis]
+      aggregation_intervals=["MINUTE", "HOUR", "DAY", "MONTH"]
+
+      minute_aggregation_ttl="2h0m0s"
+      hour_aggregation_ttl="48h0m0s"
+      day_aggregation_ttl="2160h0m0s"
+      month_aggregation_ttl="17520h0m0s"
+
+      [metrics.prometheus]
+      endpoint_enabled=true
+      bind="0.0.0.0:22980"
+      api_timing_histogram=true
+
+    [join_server.default]
+    server="http://{{ .Release.Name }}-{{ .Values.appserver.service.name | default "chirpstack-as"  }}.{{ .Release.Namespace }}:8003"
+    
+
+#    [geolocation_server]
+#    server="chirpstack-geolocation-server:8005"

@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name}}-as-configmap
+  namespace: {{ .Release.Namespace }}
+data:
+  chirpstack-application-server.toml: |
+    # See https://www.chirpstack.io/application-server/install/config/ for a full
+    # configuration example and documentation.
+
+    [postgresql]
+    dsn="postgres://chirpstack_as:chirpstack_as@{{ .Release.Name }}-{{ .Values.postgresql.service.name | default "pgsql"  }}.{{ .Release.Namespace }}.svc.cluster.local/chirpstack_as?sslmode=disable"
+
+    [redis]
+    url="redis://{{ .Release.Name }}-{{ .Values.redis.service.name | default "redis"  }}.{{ .Release.Namespace }}:6379"
+
+    [application_server.integration.mqtt]
+    server="tcp://{{ .Release.Name }}-{{ .Values.mosquitto.service.name | default "mosquitto"  }}.{{ .Release.Namespace }}:1883"
+
+    [application_server.api]
+    public_host="{{ .Release.Name }}-{{ .Values.appserver.service.name | default "chirpstack-as"  }}.{{ .Release.Namespace }}:8001"
+
+    [metrics]
+    timezone="Local"
+
+      [metrics.redis]
+      aggregation_intervals=["MINUTE", "HOUR", "DAY", "MONTH"]
+
+      minute_aggregation_ttl="2h0m0s"
+      hour_aggregation_ttl="48h0m0s"
+      day_aggregation_ttl="2160h0m0s"
+      month_aggregation_ttl="17520h0m0s"
+
+      [metrics.prometheus]
+      endpoint_enabled=true
+      bind="0.0.0.0:22981"
+      api_timing_histogram=true
+
+    [application_server.external_api]
+    bind="0.0.0.0:8080"
+    jwt_secret="verysecret"

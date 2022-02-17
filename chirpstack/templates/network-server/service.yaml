@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.networkserver.service.name | default "chirpstack-ns"  }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: chirpstack-ns
+    {{- include "chirpstack.matchLabels" . | nindent 4 }}
+spec:
+  ports:
+    - port: 8000
+      name: chirpstack-ns
+  type: ClusterIP
+  selector:
+    app: chirpstack-ns
+    # {{- include "chirpstack.matchLabels" . | nindent 4 }}

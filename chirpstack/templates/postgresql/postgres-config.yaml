@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-postgres-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: pgsql
+data:
+#  POSTGRES_DB: pgsql
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: passwd

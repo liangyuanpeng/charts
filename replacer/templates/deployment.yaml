@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-replacer
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}-replacer
+spec:
+  selector:
+    matchLabels:  
+      app: {{ .Release.Name }}-replacer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-replacer
+    spec:
+      volumes:
+      - secret:
+          secretName: {{ .Release.Name }}-replacer
+        name: tlsfile
+      serviceAccountName: {{ .Release.Name }}-replacer
+      initContainers:
+        - name: waitfor
+          image: ghcr.io/liangyuanpeng/waitfor:v4
+          imagePullPolicy: IfNotPresent
+          args:
+          - --jobname 
+          - {{ .Release.Name }}-replacer-patch
+      containers:
+        - name: replacer
+          image: ghcr.io/liangyuanpeng/replacer:v1
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: tlsfile
+            mountPath: /tlsfile/
+          args:
+          - --cert=/tlsfile/cert
+          - --key=/tlsfile/key
+          ports:
+            - name: replacer
+              protocol: TCP
+              containerPort: 8181
+          resources:
+            requests:
+              memory: 125Mi 
+            limits:
+              memory: 512Mi
+
+---
