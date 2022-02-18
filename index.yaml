@@ -9,7 +9,7 @@ entries:
     name: mosquitto
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/mosquitto-0.1.0.tgz
+    - https://liangyuanpeng.github.io/chartspackage/mosquitto-0.1.0.tgz
     version: 0.1.0
   chirpstack:
   - apiVersion: v2
@@ -20,7 +20,7 @@ entries:
     name: chirpstack
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/chirpstack-0.5.0.tgz
+    - https://liangyuanpeng.github.io/chartspackage/chirpstack-0.5.0.tgz
     version: 0.5.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -30,7 +30,7 @@ entries:
     name: chirpstack
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/chirpstack-0.4.0.tgz
+    - https://liangyuanpeng.github.io/chartspackage/chirpstack-0.4.0.tgz
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -40,7 +40,7 @@ entries:
     name: chirpstack-helm-chart
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/chirpstack-helm-chart-0.3.0.tgz
+    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.3.0.tgz
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -50,7 +50,7 @@ entries:
     name: chirpstack-helm-chart
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/chirpstack-helm-chart-0.2.0.tgz
+    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.2.0.tgz
   chirpstack-helm-chart:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -60,7 +60,7 @@ entries:
     name: chirpstack-helm-chart
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/chirpstack-helm-chart-0.3.0.tgz
+    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.3.0.tgz
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -70,6 +70,6 @@ entries:
     name: chirpstack-helm-chart
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/chirpstack-helm-chart-0.2.0.tgz
+    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.2.0.tgz
     version: 0.2.0
 generated: "2021-12-30T00:11:47.343861798+08:00"
