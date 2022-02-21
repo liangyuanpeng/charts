@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  replacer:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-02-21T12:26:52.385142288+08:00"
+    description: A Helm chart for Kubernetes
+    digest: a426f0bf3c5fc04da04579549087591690ee0be47130eb1464e2cdeff8be04fa
+    name: replacer
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/chartspackage/replacer-0.1.0.tgz
+    version: 0.1.0
   mosquitto:
   - apiVersion: v2
     appVersion: 1.16.0
