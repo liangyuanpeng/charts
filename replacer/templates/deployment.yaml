@@ -22,7 +22,7 @@ spec:
       serviceAccountName: {{ .Release.Name }}-replacer
       initContainers:
         - name: waitfor
-          image: ghcr.io/liangyuanpeng/waitfor:v1.0.0
+          image: "{{ .Values.waitfor.image.repository }}:{{ .Values.waitfor.image.tag}}"
           imagePullPolicy: IfNotPresent
           args:
           - --jobname 
