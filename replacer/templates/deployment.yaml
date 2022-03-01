@@ -29,7 +29,7 @@ spec:
           - {{ .Release.Name }}-replacer-patch
       containers:
         - name: replacer
-          image: ghcr.io/liangyuanpeng/replacer:v1.0.0
+          image: "{{ .Values.replacer.image.repository }}:{{ .Values.replacer.image.tag}}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: tlsfile
