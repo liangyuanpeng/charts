@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ksm-checker
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: ksm-checker
+          containers:
+          - name: ksm-checker
+            image: github.com/liangyuanpeng/ksm-checker:v0.2.0
+            imagePullPolicy: IfNotPresent
+            args:
+            - --url
+            - http://ksm-kube-state-metrics.kube-system:8080/metrics
+          restartPolicy: OnFailure
