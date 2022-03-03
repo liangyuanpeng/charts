@@ -9,7 +9,7 @@ entries:
     name: ksm-cheker
     type: application
     urls:
-    - ksm-cheker-0.2.0.tgz
+    - https://liangyuanpeng.github.io/charts/archives/ksm-cheker-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
