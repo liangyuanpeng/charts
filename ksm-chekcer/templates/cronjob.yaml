@@ -11,9 +11,14 @@ spec:
           serviceAccountName: ksm-checker
           containers:
           - name: ksm-checker
-            image: github.com/liangyuanpeng/ksm-checker:v0.2.0
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
             imagePullPolicy: IfNotPresent
             args:
             - --url
-            - http://ksm-kube-state-metrics.kube-system:8080/metrics
+            - {{ .Values.checker.ksm.url }}
+            env:
+            - name: TOKEN
+              value: {{ .Values.checker.alert.token }}
+            - name: SECRET
+              value: {{ .Values.checker.alert.secret }}
           restartPolicy: OnFailure

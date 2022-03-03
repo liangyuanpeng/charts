@@ -5,10 +5,17 @@
 replicaCount: 1
 
 image:
-  repository: eclipse-mosquitto
+  repository: github.com/liangyuanpeng/ksm-checker
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2.0.14"
+  tag: "v0.2.0"
+
+checker:
+  ksm:
+    url: http://ksm-kube-state-metrics.kube-system:8080/metrics
+  alert:
+    token: ""
+    secret: ""
 
 imagePullSecrets: []
 nameOverride: ""
