@@ -84,25 +84,6 @@ entries:
     urls:
     - https://liangyuanpeng.github.io/charts/archives/chirpstack-0.4.0.tgz
     version: 0.4.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2021-12-30T00:11:47.377917697+08:00"
-    description: A Helm chart for Kubernetes
-    digest: f505da9fcf1d0e9397b230d7169f30aed2db307579d25d85976a5d90000b8a23
-    name: chirpstack-helm-chart
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-helm-chart-0.3.0.tgz
-    version: 0.3.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2021-12-30T00:11:47.373972001+08:00"
-    description: A Helm chart for Kubernetes
-    digest: e59871e0ba99ef9f300396ab108e6dd46de4654613c64cfb5cc2a3e758d42b5d
-    name: chirpstack-helm-chart
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-helm-chart-0.2.0.tgz
   chirpstack-helm-chart:
   - apiVersion: v2
     appVersion: 1.16.0
