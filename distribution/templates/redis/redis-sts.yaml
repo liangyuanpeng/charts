@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: redis
+  name: {{ .Release.Name}}-redis
+spec:
+  selector:
+    matchLabels: 
+      app: redis
+  serviceName: {{ .Release.Name}}-redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      volumes:
+      - name: redis-config
+        configMap: 
+          name: {{ .Release.Name}}-redis-configmap
+      containers:
+        - image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag}}"
+          name: redis
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: redis-vct
+              mountPath: /etc/redis/data
+            - name: redis-config
+              mountPath: /etc/redis/config
+          command: ['redis-server','/etc/redis/config/redis.conf']
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-vct
+      spec:
+        storageClassName: {{ .Values.redis.storageClassName }}
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+
+

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name}}-registry
+  labels:
+    app: registry
+spec:
+  ports:
+    - port: 5000
+      name: registry
+  type: ClusterIP
+  selector:
+    app: registry
