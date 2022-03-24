@@ -1,4 +1,4 @@
-> 中文 | [README_zh.md]
+[中文](README_zh.md)
 
 # charts
 Some helm chart. 

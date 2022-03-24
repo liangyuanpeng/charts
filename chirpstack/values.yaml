@@ -12,12 +12,14 @@ mosquitto:
     stableNodePort: false
 
 appserver:
-  image: chirpstack/chirpstack-application-server:3
+  replicas: 1
+  image: chirpstack/chirpstack-application-server:3.17
   service:
     name: chirpstack-as
 
 networkserver:
-  image: chirpstack/chirpstack-network-server:3
+  replicas: 1
+  image: chirpstack/chirpstack-network-server:3.16
   service: 
     name: chirpstack-ns
 
@@ -32,7 +34,7 @@ postgresql:
         storageClassName: "longhorn"
         resources:
           requests:
-            storage: 5G
+            storage: 10Gi
 
 redis:
   image: redis:6.0.9
@@ -45,7 +47,7 @@ redis:
         storageClassName: "longhorn"
         resources:
           requests:
-            storage: 500M
+            storage: 1Gi
 
 
 exporter:
