@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: registry-gcrio
+  name: {{ .Release.Name}}-registry
+spec:
+  selector:
+    matchLabels:
+      app: registry-gcrio
+  serviceName: {{ .Release.Name}}-registry
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - image: "{{ .Values.registory.image.repository }}:{{ .Values.registory.image.tag}}"
+          name: registry
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: registry-vct
+              mountPath: /var/lib/registry-cache
+            - name: registry-config
+              mountPath: /etc/docker/registry
+      volumes:
+        - name: registry-config
+          configMap:
+            name: {{ .Release.Name}}-registry-configmap
+    metadata:
+      labels:
+        app: registry-gcrio
+  volumeClaimTemplates:
+    - metadata:
+        name: registry-vct
+      spec:
+        # storageClassName: longhorn
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+
+

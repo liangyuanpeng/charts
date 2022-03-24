@@ -1,6 +1,27 @@
 apiVersion: v1
 entries:
+  distribution:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-03-18T12:44:56.772575158+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 34ca82fe1f88cca97b5c0cf151c635c382ec2c98074ce222ffa791c25c3c6293
+    name: distribution
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/distribution-0.1.0.tgz
+    version: 0.1.0
   replacer:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-03-03T20:42:30.749412841+08:00"
+    description: A Helm chart for Kubernetes
+    digest: d7ec153095ae1ab062de338df794f56c452ffbbe8a040db2dae10738e0db6e0f
+    name: replacer
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/replacer-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-02-21T12:26:52.385142288+08:00"
@@ -9,8 +30,18 @@ entries:
     name: replacer
     type: application
     urls:
-    - https://liangyuanpeng.github.io/chartspackage/replacer-0.1.0.tgz
+    - https://liangyuanpeng.github.io/charts/archives/replacer-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-02-27T13:20:14.292875304+08:00"
+    description: A Helm chart for Kubernetes
+    digest: e2f6b2c197c71ce7b5ec256da8aec5866a4c11bb2527a2abcdd8654ae0adb362
+    name: replacer
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/replacer-0.2.0.tgz
+    version: 0.2.0
   mosquitto:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -20,7 +51,7 @@ entries:
     name: mosquitto
     type: application
     urls:
-    - https://liangyuanpeng.github.io/chartspackage/mosquitto-0.1.0.tgz
+    - https://liangyuanpeng.github.io/charts/archives/mosquitto-0.1.0.tgz
     version: 0.1.0
   chirpstack:
   - apiVersion: v2
@@ -31,7 +62,7 @@ entries:
     name: chirpstack
     type: application
     urls:
-    - https://liangyuanpeng.github.io/chartspackage/chirpstack-0.5.0.tgz
+    - https://liangyuanpeng.github.io/charts/archives/chirpstack-0.5.0.tgz
     version: 0.5.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -41,27 +72,8 @@ entries:
     name: chirpstack
     type: application
     urls:
-    - https://liangyuanpeng.github.io/chartspackage/chirpstack-0.4.0.tgz
+    - https://liangyuanpeng.github.io/charts/archives/chirpstack-0.4.0.tgz
     version: 0.4.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2021-12-30T00:11:47.377917697+08:00"
-    description: A Helm chart for Kubernetes
-    digest: f505da9fcf1d0e9397b230d7169f30aed2db307579d25d85976a5d90000b8a23
-    name: chirpstack-helm-chart
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.3.0.tgz
-    version: 0.3.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2021-12-30T00:11:47.373972001+08:00"
-    description: A Helm chart for Kubernetes
-    digest: e59871e0ba99ef9f300396ab108e6dd46de4654613c64cfb5cc2a3e758d42b5d
-    name: chirpstack-helm-chart
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.2.0.tgz
   chirpstack-helm-chart:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -71,7 +83,7 @@ entries:
     name: chirpstack-helm-chart
     type: application
     urls:
-    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.3.0.tgz
+    - https://liangyuanpeng.github.io/charts/archives/chirpstack-helm-chart-0.3.0.tgz
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -81,6 +93,27 @@ entries:
     name: chirpstack-helm-chart
     type: application
     urls:
-    - https://liangyuanpeng.github.io/chartspackage/chirpstack-helm-chart-0.2.0.tgz
+    - https://liangyuanpeng.github.io/charts/archives/chirpstack-helm-chart-0.2.0.tgz
     version: 0.2.0
+  ksm-cheker:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-03-03T21:42:30.08143417+08:00"
+    description: A Helm chart for ksm-cheker
+    digest: ff0b2eeb565a55dfb7f3dab6f01e16920ff4e11b238691d7b0a49c6502c13aa1
+    name: ksm-cheker
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/ksm-cheker-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-03-03T21:07:30.258380268+08:00"
+    description: A Helm chart for ksm-cheker
+    digest: 2a25b8906d88f287b0299b34e925ff2a7e407933f1f5bcaaa5cdb7aa605747c0
+    name: ksm-cheker
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/ksm-cheker-0.1.0.tgz
+    version: 0.1.0
 generated: "2021-12-30T00:11:47.343861798+08:00"

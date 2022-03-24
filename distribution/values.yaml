@@ -1,0 +1,28 @@
+# Default values for distribution.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+registory:
+  proxy: "https://gcr.io"
+  image:
+    repository: distribution/registry
+    pullPolicy: IfNotPresent
+    tag: "v2.7.0"
+
+redis:
+  storageClassName: openebs-hostpath
+  image:
+    repository: redis
+    pullPolicy: IfNotPresent
+    tag: "6.2.4"
+
+minio:
+  enabled: false
+  storageClassName: openebs-hostpath
+  image:
+    repository: quay.io/minio/minio
+    pullPolicy: IfNotPresent
+    tag: "RELEASE.2021-09-24T00-24-24Z"
+

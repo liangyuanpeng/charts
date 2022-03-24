@@ -22,14 +22,14 @@ spec:
       serviceAccountName: {{ .Release.Name }}-replacer
       initContainers:
         - name: waitfor
-          image: ghcr.io/liangyuanpeng/waitfor:v1.0.0
+          image: "{{ .Values.waitfor.image.repository }}:{{ .Values.waitfor.image.tag}}"
           imagePullPolicy: IfNotPresent
           args:
           - --jobname 
           - {{ .Release.Name }}-replacer-patch
       containers:
         - name: replacer
-          image: ghcr.io/liangyuanpeng/replacer:v1.0.0
+          image: "{{ .Values.replacer.image.repository }}:{{ .Values.replacer.image.tag}}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: tlsfile

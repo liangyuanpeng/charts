@@ -1,6 +1,6 @@
 apiVersion: v2
-name: replacer
-description: A Helm chart for Kubernetes
+name: ksm-cheker
+description: A Helm chart for ksm-cheker
 
 # A chart can be either an 'application' or a 'library' chart.
 #

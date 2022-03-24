@@ -4,11 +4,20 @@
 
 replicaCount: 1
 
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+certgen:
+  image:
+    repository: lank8s.cn/ingress-nginx/kube-webhook-certgen
+    tag: v1.1.1
+
+waitfor:
+  image:
+    repository: ghcr.io/liangyuanpeng/waitfor
+    tag: v1.0.0
+
+replacer:
+  image:
+    repository: ghcr.io/liangyuanpeng/replacer
+    tag: v1.1.0
 
 imagePullSecrets: []
 nameOverride: ""

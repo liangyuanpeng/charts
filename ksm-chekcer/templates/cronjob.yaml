@@ -1,0 +1,24 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ksm-checker
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: ksm-checker
+          containers:
+          - name: ksm-checker
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
+            imagePullPolicy: IfNotPresent
+            args:
+            - --url
+            - {{ .Values.checker.ksm.url }}
+            env:
+            - name: TOKEN
+              value: {{ .Values.checker.alert.token }}
+            - name: SECRET
+              value: {{ .Values.checker.alert.secret }}
+          restartPolicy: OnFailure

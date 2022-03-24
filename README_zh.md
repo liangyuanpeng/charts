@@ -1,8 +1,5 @@
-> 中文 | [README_zh.md]
-
 # charts
-Some helm chart. 
-
+主要存放了chirpstack，replacer和mosquitto的helm chart
 
 - [./replacer](replacer)
 - [./mosquitto](mosquitto)
