@@ -12,11 +12,13 @@ mosquitto:
     stableNodePort: false
 
 appserver:
+  replicas: 1
   image: chirpstack/chirpstack-application-server:3.17
   service:
     name: chirpstack-as
 
 networkserver:
+  replicas: 1
   image: chirpstack/chirpstack-network-server:3.16
   service: 
     name: chirpstack-ns
