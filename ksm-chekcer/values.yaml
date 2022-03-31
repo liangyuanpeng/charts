@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: github.com/liangyuanpeng/ksm-checker
+  repository: ghcr.io/liangyuanpeng/ksm-checker
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v0.2.0"
