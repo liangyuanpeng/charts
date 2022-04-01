@@ -127,4 +127,14 @@ entries:
     urls:
     - https://liangyuanpeng.github.io/charts/archives/acme-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-04-01T16:04:47.280729979+08:00"
+    description: A Helm chart for Acme
+    digest: 2e6c2fb0f0eb62fc479b51e1ade31e8bb850316b2bea92f9ea9703e2b5901f64
+    name: acme
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/acme-0.2.0.tgz
+    version: 0.2.0
 generated: "2021-12-30T00:11:47.343861798+08:00"
