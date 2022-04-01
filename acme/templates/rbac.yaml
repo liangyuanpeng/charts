@@ -3,7 +3,7 @@ kind: ServiceAccount
 metadata:
   name: {{ .Release.Name}}-acmesa
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: {{ .Values.acme.rbac.version }}
 kind: Role 
 metadata:
   name: {{ .Release.Name}}-acmerole
@@ -18,7 +18,7 @@ rules:
   - create
   - list
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: {{ .Values.acme.rbac.version }}
 kind: RoleBinding
 metadata:
   name: {{ .Release.Name}}-acmerolebinding
