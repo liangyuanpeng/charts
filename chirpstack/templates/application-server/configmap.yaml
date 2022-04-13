@@ -9,7 +9,7 @@ data:
     # configuration example and documentation.
 
     [postgresql]
-    dsn="postgres://chirpstack_as:chirpstack_as@{{ .Release.Name }}-{{ .Values.postgresql.service.name | default "pgsql"  }}.{{ .Release.Namespace }}.svc.cluster.local/chirpstack_as?sslmode=disable"
+    dsn="postgres://chirpstack_as:chirpstack_as@{{ .Release.Name }}-{{ .Values.postgresql.service.name | default "pgsql"  }}.{{ .Release.Namespace }}/chirpstack_as?sslmode=disable"
 
     [redis]
     url="redis://{{ .Release.Name }}-{{ .Values.redis.service.name | default "redis"  }}.{{ .Release.Namespace }}:6379"
