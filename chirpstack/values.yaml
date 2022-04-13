@@ -20,7 +20,7 @@ appserver:
     enabled: false
     #className: "nginx"
     #annotations:
-    host: chirpstack
+    host: chirpstack.local
     path: /
     pathType: ImplementationSpecific
 
