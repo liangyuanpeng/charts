@@ -25,7 +25,7 @@ spec:
       - name: wait-mqtt
         image: busybox:1.31
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'until nslookup {{ .Values.mosquitto.service.name }}; do echo waiting for mqtt; sleep 2; done;']
+        command: ['sh', '-c', 'until nslookup {{ .Release.Name }}-{{ .Values.mosquitto.service.name | default "mosquitto"  }}; do echo waiting for mqtt; sleep 2; done;']
       containers:
       - name: gateway-bridge
         image: chirpstack/chirpstack-gateway-bridge:3
