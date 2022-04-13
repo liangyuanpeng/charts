@@ -26,4 +26,10 @@ spec:
         ports:
         - containerPort: 1883
           name: mosquitto
-
+        volumeMounts:
+        - name: configfile
+          mountPath: /mosquitto/config
+      volumes:
+      - name: configfile
+        configMap:
+          name:  {{ .Release.Name}}-mosquitto-configmap
