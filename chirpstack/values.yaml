@@ -4,7 +4,7 @@ gatewaybridge:
     enable: false
 
 mosquitto:
-  image: eclipse-mosquitto:1.6.12
+  image: eclipse-mosquitto:2.0
   service:
     name: mosquitto
     type: ClusterIP
