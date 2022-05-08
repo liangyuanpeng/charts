@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-pulsar
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: pulsar
+      release: {{ .Release.Name }}-pulsar
+  serviceName: {{ .Release.Name }}-pulsar
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pulsar
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: pulsar
+        image: apachepulsar/pulsar:2.10.0
+        imagePullPolicy: IfNotPresent
+        command: ["sh","-c"]
+        args: ["bin/apply-config-from-env.py conf/client.conf && bin/apply-config-from-env.py conf/standalone.conf && bin/pulsar standalone -nfw -nss"]
+        ports:
+        - name: pulsar
+          containerPort: 6650
+        - name: admin
+          containerPort: 8080
+      volumes:
+      - name: configfile
+        configMap:
+          name:  {{ .Release.Name}}-pulsar

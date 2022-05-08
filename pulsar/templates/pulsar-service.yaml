@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pulsar
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+    - name: pulsar
+      port: 6650
+    - name: admin
+      port: 8080
+  type: ClusterIP
+  selector:
+    app: pulsar
+    release: {{ .Release.Name }}-pulsar
