@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name}}-acmesa
+---
+apiVersion: {{ .Values.acme.rbac.version }}
+kind: Role 
+metadata:
+  name: {{ .Release.Name}}-acmerole
+rules:
+- apiGroups:
+  - v1
+  - ""
+  resources:
+  - secret
+  - secrets
+  verbs:
+  - create
+  - list
+---
+apiVersion: {{ .Values.acme.rbac.version }}
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name}}-acmerolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ .Release.Name}}-acmerole
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name}}-acmesa

@@ -1,0 +1,14 @@
+acme:
+  dns:
+    # ali dns api key
+    Ali_Key: 
+    # ali dns api secret
+    Ali_Secret: 
+  # domain of tls
+  domain: 
+  # author email for Let's Encrypt
+  author: 
+
+  rbac:
+    version:  rbac.authorization.k8s.io/v1beta1
+

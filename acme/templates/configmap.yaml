@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name}}-acmecm
+data:
+  Ali_Key: {{ .Values.acme.dns.Ali_Key }}
+  Ali_Secret:  {{ .Values.acme.dns.Ali_Secret }}

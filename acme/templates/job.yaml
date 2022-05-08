@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name}}-init
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      name: init
+      labels:
+        app: init
+    spec:
+      serviceAccountName: {{ .Release.Name}}-acmesa
+      volumes:
+        - name: config
+          emptyDir: {}
+        - name: cafiles
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name}}-cafiles
+      initContainers:
+        - name: acme
+          image: neilpang/acme.sh:3.0.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name}}-acmecm
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: cafiles
+              mountPath: /ali_dns
+            - name: cafiles
+              mountPath: /acme.sh
+              subPath: cafile
+          args: ["--issue","--dns","dns_ali","-d","{{ .Values.acme.domain }}","-m","{{ .Values.acme.author }}","--debug"]
+      containers:
+        - name: write
+          image: bitnami/kubectl:1.21.5
+          command: ["sh","-c","kubectl create secret tls {{ .Values.acme.domain }} --cert=/cafile/fullchain.cer --key=/cafile/{{ .Values.acme.domain }}.key"]
+          volumeMounts:
+            - name: cafiles
+              mountPath: /cafile
+              subPath: cafile/{{ .Values.acme.domain }}
+      restartPolicy: Never

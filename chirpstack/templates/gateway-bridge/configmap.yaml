@@ -10,7 +10,7 @@ data:
     # configuration example and documentation.
 
     [integration.mqtt.auth.generic]
-    servers=["tcp://mosquitto.{{ .Release.Namespace }}:1883"]
+    servers=["tcp://{{ .Release.Name }}-{{ .Values.mosquitto.service.name | default "mosquitto"  }}.{{ .Release.Namespace }}:1883"]
     username=""
     password=""
     
