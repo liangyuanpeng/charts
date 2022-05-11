@@ -11,6 +11,16 @@ entries:
     urls:
     - https://liangyuanpeng.github.io/charts/archives/distribution-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-05-11T20:47:46.35923737+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 2123863f193eaa519e815a03d8f57cdce441301cfbc065b3eeb10566627e4485
+    name: distribution
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/distribution-0.2.0.tgz
+    version: 0.2.0
   replacer:
   - apiVersion: v2
     appVersion: 1.16.0
