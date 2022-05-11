@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: registry-gcrio
+      app: registry
   serviceName: {{ .Release.Name}}-registry
   replicas: 1
   template:
@@ -27,7 +27,7 @@ spec:
             name: {{ .Release.Name}}-registry-configmap
     metadata:
       labels:
-        app: registry-gcrio
+        app: registry
   volumeClaimTemplates:
     - metadata:
         name: registry-vct
