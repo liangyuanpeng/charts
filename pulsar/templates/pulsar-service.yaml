@@ -9,7 +9,24 @@ spec:
       port: 6650
     - name: admin
       port: 8080
+    - name: httpadmin
+      port: 8081
   type: ClusterIP
+  selector:
+    app: pulsar
+    release: {{ .Release.Name }}-pulsar
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pulsarnp
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+    - name: httpadmin
+      port: 8081
+      nodePort: 30081
+  type: NodePort
   selector:
     app: pulsar
     release: {{ .Release.Name }}-pulsar

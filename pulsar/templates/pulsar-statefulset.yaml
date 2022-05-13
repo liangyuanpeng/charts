@@ -14,20 +14,60 @@ spec:
     metadata:
       labels:
         app: pulsar
+        release: {{ .Release.Name }}-pulsar
     spec:
+      serviceAccountName: {{ .Release.Name }}-pulsar
       terminationGracePeriodSeconds: 30
+      initContainers:
+      - name: create
+        image: lank8s.cn/ingress-nginx/kube-webhook-certgen:v1.1.1
+        imagePullPolicy: IfNotPresent
+        args:
+        - create
+        - --host={{ .Release.Name }}-pulsar,{{ .Release.Name }}-pulsar.$(POD_NAMESPACE).svc
+        - --namespace=$(POD_NAMESPACE)
+        - --secret-name={{ .Release.Name }}-pulsar
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
       containers:
       - name: pulsar
         image: apachepulsar/pulsar:2.10.0
         imagePullPolicy: IfNotPresent
         command: ["sh","-c"]
+        volumeMounts:
+        - name: secret
+          mountPath: /pulsar/secret
+        env:
+        - name: PULSAR_PREFIX_tlsRequireTrustedClientCertOnConnect
+          value: "true"
+        - name: PULSAR_PREFIX_tlsCertificateFilePath
+          value: /pulsar/secret/cert
+        - name: PULSAR_PREFIX_tlsKeyFilePath
+          value: /pulsar/secret/key
+        - name: PULSAR_PREFIX_tlsTrustCertsFilePath
+          value: /pulsar/secret/ca
+        - name: PULSAR_PREFIX_webServicePortTls
+          value: "8081"
+        - name: PULSAR_PREFIX_brokerServicePortTls
+          value: "6651"
+          #cat standalone.conf |grep brokerServicePortTls
+          # helm install pulsar apache/pulsar --set initialize=true --set affinity.anti_affinity=false --set components.pulsar_manager=false --set monitoring.prometheus=false --set monitoring.grafana=false --set zookeeper.volumes.data.storageClassName=openebs-hostpath --set bookkeeper.volumes.ledgers.storageClassName=openebs-hostpath --set zookeeper.replicaCount=1 --set broker.replicaCount=1 --set bookkeeper.replicaCount=2 --set proxy.replicaCount=1
         args: ["bin/apply-config-from-env.py conf/client.conf && bin/apply-config-from-env.py conf/standalone.conf && bin/pulsar standalone -nfw -nss"]
         ports:
         - name: pulsar
           containerPort: 6650
         - name: admin
           containerPort: 8080
+        - name: httpadmin
+          containerPort: 8081
       volumes:
       - name: configfile
         configMap:
           name:  {{ .Release.Name}}-pulsar
+      - name: secret
+        secret:
+          secretName: {{ .Release.Name}}-pulsar
+    
