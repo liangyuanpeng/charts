@@ -1,0 +1,66 @@
+{{ if .Values.pulsar.tls.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-caconfig
+data:
+  pulsar-csr.json: |
+    {
+        "CN": "pulsar",
+        "key": {
+          "algo": "rsa",
+          "size": 2048
+        },
+        "hosts": [
+          "{{ .Release.Name }}-{{ .Values.pulsar.service.name }}",
+          "{{ .Release.Name }}-{{ .Values.pulsar.service.name }}.{{ .Release.Namespace }}"
+        ],
+        "names": [
+          {
+            "C": "CN",
+            "ST": "shenzhen",
+            "L": "shenzhen",
+            "O": "pulsar",
+            "OU": "System"
+          }
+        ]
+      }
+  ca-csr.json:  |
+    {
+        "CN":"CA",
+        "key":{
+            "algo":"rsa",
+            "size":2048
+        },
+        "names":[
+            {
+                "C":"CN",
+                "ST":"shenzhen",
+                "L":"shenzhen",
+                "O":"pulsar",
+                "OU":"System"
+            }
+        ]
+    }
+
+  ca-config.json: |
+    {
+        "signing":{
+            "default":{
+                "expiry":"876000h"
+            },
+            "profiles":{
+                "pulsar":{
+                    "usages":[
+                        "signing",
+                        "key encipherment",
+                        "server auth",
+                        "client auth"
+                    ],
+                    "expiry":"876000h"
+                }
+            }
+        }
+    }
+{{ end }}

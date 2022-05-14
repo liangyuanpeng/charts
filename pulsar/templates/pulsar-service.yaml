@@ -9,7 +9,7 @@ spec:
       port: 6650
     - name: admin
       port: 8080
-    - name: httpadmin
+    - name: httpsadmin
       port: 8081
   type: ClusterIP
   selector:

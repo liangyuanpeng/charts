@@ -11,33 +11,24 @@ metadata:
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
-  - admissionregistration.k8s.io
-  resources:
-  - mutatingWebhookConfigurations
-  verbs:
-  - list
-  - get
-  - update
-  - patch
-- apiGroups:
   - "batch"
   resources:
   - jobs
   verbs:
   - list
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ .Release.Name }}-pulsar
 rules:
-- apiGroups:
-  - admissionregistration.k8s.io
-  resources:
-  - mutatingWebhookConfiguration
-  - mutatingwebhookconfigurations
-  verbs:
-  - "*"
 - apiGroups:
   - "*"
   resources:
@@ -50,23 +41,22 @@ rules:
   - secrets
   verbs:
   - create
-  - patch
   - get
 ---
-# apiVersion: rbac.authorization.k8s.io/v1
-# kind: RoleBinding
-# metadata:
-#   name: replacer
-#   namespace: {{ .Release.Namespace }}
-# roleRef:
-#   apiGroup: rbac.authorization.k8s.io
-#   kind: Role
-#   name: replacer
-# subjects:
-# - kind: ServiceAccount
-#   name: replacer
-#   namespace: {{ .Release.Namespace }}
-# ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-pulsar
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ .Release.Name }}-pulsar
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-pulsar
+  namespace: {{ .Release.Namespace }}
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:

@@ -1,0 +1,50 @@
+{{ if .Values.pulsar.tls.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-ca
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      name: {{ .Release.Name }}-ca
+      labels:
+        app: {{ .Release.Name }}-ca
+    spec:
+      serviceAccountName: {{ .Release.Name }}-pulsar
+      volumes:
+      - name: cafiles
+        emptyDir: {}
+      - name: configfile
+        configMap:
+          name: {{ .Release.Name }}-caconfig
+      initContainers:
+      - name: createca
+        image: cfssl/cfssl:1.6.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        args:
+        - cat /caconfigmap/pulsar-csr.json > /cafiles/pulsar-csr.json;
+          cat /caconfigmap/ca-csr.json > /cafiles/ca-csr.json;
+          cat /caconfigmap/ca-config.json > /cafiles/ca-config.json;
+          cd /cafiles;
+          cfssl gencert -initca ca-csr.json | cfssljson -bare ca;
+          cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=pulsar pulsar-csr.json | cfssljson -bare pulsar;
+          chmod -R 777 pulsar-key.pem;
+        volumeMounts:
+          - name: cafiles
+            mountPath: /cafiles
+          - name: configfile
+            mountPath: /caconfigmap
+      containers:
+      - name: write
+        image: bitnami/kubectl:1.21.5
+        command: ["sh","-c","ls -allh /cafiles && kubectl create secret generic {{ .Release.Name }}-pulsar --from-file=cert=/cafiles/pulsar.pem --from-file=key=/cafiles/pulsar-key.pem --from-file=ca=/cafiles/ca.pem"]
+        volumeMounts:
+          - name: cafiles
+            mountPath: /cafiles
+      restartPolicy: Never
+{{ end }}

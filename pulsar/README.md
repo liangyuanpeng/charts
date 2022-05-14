@@ -2,6 +2,6 @@
 
 This helm chart is only work for pulsar standalone. Order to deploy a simple pulsar.  
 
-- [ ] pulsar standalone
+- [x] pulsar standalone
 - [ ] pulsar manager
 - [ ] pulsar proxy

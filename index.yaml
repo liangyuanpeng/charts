@@ -147,4 +147,15 @@ entries:
     urls:
     - https://liangyuanpeng.github.io/charts/archives/acme-0.2.0.tgz
     version: 0.2.0
+  pulsar:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-05-14T22:20:18.0154194+08:00"
+    description: A pulsar standalone Helm chart for Kubernetes
+    digest: 3624e8ac038811d55bcce9ecac7909462ac052ded162e54bc9cb76606543fab5
+    name: pulsar
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/pulsar-0.1.0.tgz
+    version: 0.1.0
 generated: "2021-12-30T00:11:47.343861798+08:00"
