@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-chirpstack-event-forward
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: chirpstack-event-forward
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: chirpstack-event-forward
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: chirpstack-event-forward
+        image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: configfile
+          mountPath: /etc/chirpstack-event-forward
+        ports:
+        - name: cef
+          containerPort: 8080
+      volumes:
+      - name: configfile
+        configMap:
+          name:  {{ .Release.Name}}-chirpstack-event-forward

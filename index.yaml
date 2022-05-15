@@ -169,4 +169,15 @@ entries:
     urls:
     - https://liangyuanpeng.github.io/charts/archives/pulsar-0.2.0.tgz
     version: 0.2.0
+  chirpstack-event-forward:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-05-15T21:23:32.887182097+08:00"
+    description: A chirpstack-event-forward Helm chart for Kubernetes
+    digest: a8dbcfa833223f56cc6e56fb905f5d77e18afd49bfeb469730d361408a508540
+    name: chirpstack-event-forward
+    type: application
+    urls:
+    - https://liangyuanpeng.github.io/charts/archives/chirpstack-event-forward-0.1.0.tgz
+    version: 0.1.0
 generated: "2021-12-30T00:11:47.343861798+08:00"
