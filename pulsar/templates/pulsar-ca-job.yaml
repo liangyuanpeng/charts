@@ -40,7 +40,7 @@ spec:
           - name: configfile
             mountPath: /caconfigmap
       containers:
-      - name: write
+      - name: kubectl
         image: bitnami/kubectl:1.21.5
         command: ["sh","-c","ls -allh /cafiles && kubectl create secret generic {{ .Release.Name }}-pulsar --from-file=cert=/cafiles/pulsar.pem --from-file=key=/cafiles/pulsar-key.pem --from-file=ca=/cafiles/ca.pem"]
         volumeMounts:
