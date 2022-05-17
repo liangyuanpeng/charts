@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repo: ghcr.io/liangyuanpeng/chirpstack-event-forward
-  tag: v0.1.0
+  tag: v0.1.2
 
 service:
   name: chirpstack-event-forward
