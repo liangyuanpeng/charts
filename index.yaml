@@ -158,7 +158,6 @@ entries:
     urls:
     - https://liangyuanpeng.github.io/charts/archives/pulsar-0.1.0.tgz
     version: 0.1.0
-  pulsar:
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-05-15T17:25:27.607666527+08:00"
