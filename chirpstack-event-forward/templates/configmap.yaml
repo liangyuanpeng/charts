@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name}}-chirpstack-event-forward
+  namespace: {{ .Release.Namespace }}
+data:
+  chirpstack-event-forward.yaml: |
+    general:
+      http:
+        port: 8080
+    config:
+      - name: ""
+        chirpstack:
+          url: ""
+          apiToken: ""
+        integrations:
+          mqtt:
+            enabled: false  
+            topicTemplate: "application/{{ .appid }}/device/{{ .devEUI }}/{{ .event }}"
+            url: ""
+            clientId: ""
+            qos: 1
+            username: ""
+            password: ""
+          pulsar:
+            enabled: false
+            topicTemplate: "application/{{ .appid }}/device/{{ .devEUI }}/{{ .event }}"
+            producerNameTemplate: "chirpstack-{{ .appid }}"
+            topicsPattern: "downlink/commond/down"
+            consumerName: ""
+            subscriptionName: ""

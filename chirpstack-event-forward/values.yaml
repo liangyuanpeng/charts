@@ -1,0 +1,12 @@
+# Default values for distribution.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repo: ghcr.io/liangyuanpeng/chirpstack-event-forward
+  tag: v0.1.0
+
+service:
+  name: chirpstack-event-forward
