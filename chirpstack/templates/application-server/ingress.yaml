@@ -1,0 +1,42 @@
+{{- if .Values.appserver.ingress.enabled -}}
+{{- $ingressPath := .Values.appserver.ingress.path -}}
+{{- $ingressPathType := .Values.appserver.ingress.pathType -}}
+{{- $ingressClassName := .Values.appserver.ingress.className -}}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "chirpstack.matchLabels" . | nindent 4 }}
+  annotations:
+{{- with .Values.appserver.ingress.annotations }}
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  {{- if and $ingressClassName (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ $ingressClassName }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.appserver.ingress.host }}
+      http:
+        paths:
+          - path: {{ $ingressPath }}
+            {{- if and $ingressPathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: {{ $ingressPathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ .Release.Name }}-{{ .Values.appserver.service.name | default "chirpstack-as"  }}
+                port:
+                  name: chirpstack-as
+              {{- else }}
+              serviceName: {{ .Release.Name }}-{{ .Values.appserver.service.name | default "chirpstack-as"  }}
+              servicePort: chirpstack-as
+              {{- end }}
+{{- end}}

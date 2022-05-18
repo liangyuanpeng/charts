@@ -16,6 +16,13 @@ appserver:
   image: chirpstack/chirpstack-application-server:3.17
   service:
     name: chirpstack-as
+  ingress:
+    enabled: false
+    #className: "nginx"
+    #annotations:
+    host: chirpstack.local
+    path: /
+    pathType: ImplementationSpecific
 
 networkserver:
   replicas: 1
