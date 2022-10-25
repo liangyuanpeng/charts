@@ -1,0 +1,27 @@
+# clone metrics server source code on job and write source code to pvc
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gitclone-metrics-server
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      name: code-metrics-server
+      labels:
+        app: code-metrics-server
+    spec:
+      # serviceAccountName: code-metrics-server
+      volumes:
+      - name: sourcecode
+        persistentVolumeClaim:
+          claimName: code-metrics-server
+      containers:
+      - name: git
+        image: bitnami/git:2.37.3-debian-11-r10
+        command: ["sh","-c","git clone https://gitee.com/liangyuanpeng/metrics-server.git /sourcecode/metrics-server"]
+        volumeMounts:
+          - name: sourcecode
+            mountPath: /sourcecode
+      restartPolicy: "OnFailure"
