@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: code-kube-rbac-proxy
+  name: {{ .Release.Name }}-pvc
 spec:
   accessModes:
     - ReadWriteOnce

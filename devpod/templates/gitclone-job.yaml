@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: gitclone-kube-rbac-proxy
+  name: {{ .Release.Name }}-gitclone
 spec:
   backoffLimit: 0
   template:
@@ -12,11 +12,10 @@ spec:
       labels:
         app: code-kube-rbac-proxy
     spec:
-      # serviceAccountName: code-kube-rbac-proxy
       volumes:
       - name: sourcecode
         persistentVolumeClaim:
-          claimName: code-kube-rbac-proxy
+          claimName: {{ .Release.Name }}-pvc
       containers:
       - name: git
         image: bitnami/git:2.37.3-debian-11-r10

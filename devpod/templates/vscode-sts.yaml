@@ -34,14 +34,14 @@ spec:
       labels:
         app: code-kube-rbac-proxy
     spec:
+      serviceAccountName: {{ .Release.Name }}-devpod
       initContainers:
-      # waitfor  clone source job  TODO RBAC
-      # - name: waitfor
-      #   image: ghcr.io/liangyuanpeng/waitfor:v1.0.0  # TODO break if can not list resources
-      #   imagePullPolicy: IfNotPresent
-      #   args:
-      #     - --jobname 
-      #     - gitclone-kube-rbac-proxy 
+      - name: waitfor
+        image: ghcr.io/liangyuanpeng/waitfor:v1.0.0  # TODO break if can not list resources
+        imagePullPolicy: IfNotPresent
+        args:
+          - --jobname 
+          - {{ .Release.Name }}-gitclone
       containers:
       # 第一个container  maquan
       - name: code-kube-rbac-proxy
@@ -66,4 +66,4 @@ spec:
       volumes:
       - name: source 
         persistentVolumeClaim:
-            claimName: code-kube-rbac-proxy
+            claimName: {{ .Release.Name }}-pvc
