@@ -105,27 +105,6 @@ entries:
     urls:
     - https://liangyuanpeng.github.io/charts/archives/chirpstack-helm-chart-0.2.0.tgz
     version: 0.2.0
-  ksm-cheker:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-03-03T21:42:30.08143417+08:00"
-    description: A Helm chart for ksm-cheker
-    digest: ff0b2eeb565a55dfb7f3dab6f01e16920ff4e11b238691d7b0a49c6502c13aa1
-    name: ksm-cheker
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/charts/archives/ksm-cheker-0.2.0.tgz
-    version: 0.2.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2022-03-03T21:07:30.258380268+08:00"
-    description: A Helm chart for ksm-cheker
-    digest: 2a25b8906d88f287b0299b34e925ff2a7e407933f1f5bcaaa5cdb7aa605747c0
-    name: ksm-cheker
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/charts/archives/ksm-cheker-0.1.0.tgz
-    version: 0.1.0
   acme:
   - apiVersion: v2
     appVersion: 1.16.0
