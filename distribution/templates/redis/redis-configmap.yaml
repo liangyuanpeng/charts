@@ -1,3 +1,4 @@
+{{ if .Values.redis.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -1869,3 +1870,4 @@ data:
     #
     # Set bgsave child process to cpu affinity 1,10,11
     # bgsave_cpulist 1,10-11
+{{ end }}

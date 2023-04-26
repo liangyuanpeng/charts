@@ -7,11 +7,12 @@ replicaCount: 1
 registory:
   proxy: "https://gcr.io"
   image:
-    repository: registry
-    pullPolicy: IfNotPresent
-    tag: "2.7.0"
+    repository: distribution/distribution
+    pullPolicy: IfNotPresentdo
+    tag: "2.8.1"
 
 redis:
+  enabled: true
   storageClassName: openebs-hostpath
   image:
     repository: redis
