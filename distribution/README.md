@@ -1,2 +1,1 @@
-
-Helm chart for distribution
+Helm chart for container registry of distribution.
