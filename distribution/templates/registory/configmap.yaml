@@ -9,13 +9,16 @@ data:
       fields:
         service: {{ .Release.Name}}-registry
     storage:
+{{ if .Values.redis.enabled }}
       cache:
         blobdescriptor: redis
+{{ end }}
       filesystem:
         rootdirectory: /var/lib/registry-cache
       maintenance:
         uploadpurging:
           enabled: false
+{{ if .Values.redis.enabled }}
     redis:
       addr: {{ .Release.Name}}-redis:6379
       pool:
@@ -25,6 +28,7 @@ data:
       dialtimeout: 10ms
       readtimeout: 10ms
       writetimeout: 10ms
+{{ end }}
     http:
       addr: :5000
       headers:
