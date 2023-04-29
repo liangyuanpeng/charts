@@ -2,18 +2,20 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: registry-gcrio
+    app: registry
+    distribution-release: {{ .Release.Name}}
   name: {{ .Release.Name}}-registry
 spec:
   selector:
     matchLabels:
       app: registry
+      distribution-release: {{ .Release.Name}}
   serviceName: {{ .Release.Name}}-registry
   replicas: 1
   template:
     spec:
       containers:
-        - image: "{{ .Values.registory.image.repository }}:{{ .Values.registory.image.tag}}"
+        - image: "{{ .Values.distribution.image.repository }}:{{ .Values.distribution.image.tag}}"
           name: registry
           imagePullPolicy: IfNotPresent
           volumeMounts:
@@ -28,11 +30,11 @@ spec:
     metadata:
       labels:
         app: registry
+        distribution-release: {{ .Release.Name}}
   volumeClaimTemplates:
     - metadata:
         name: registry-vct
       spec:
-        # storageClassName: longhorn
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:

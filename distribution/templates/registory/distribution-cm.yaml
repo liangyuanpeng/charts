@@ -38,9 +38,9 @@ data:
         enabled: true
         interval: 10s
         threshold: 3
-    {{ if .Values.registory.proxy }}
+    {{ if .Values.distribution.proxy }}
     proxy:
-      remoteurl: {{ .Values.registory.proxy }}
+      remoteurl: {{ .Values.distribution.proxy }}
     {{ end }}
 
     

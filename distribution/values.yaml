@@ -2,18 +2,17 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
-
-registory:
+distribution:
   proxy: "https://gcr.io"
   image:
     repository: distribution/distribution
-    pullPolicy: IfNotPresentdo
+    pullPolicy: IfNotPresent
     tag: "2.8.1"
+  nodePort: 30001
 
 redis:
-  enabled: true
-  storageClassName: openebs-hostpath
+  enabled: false
+  storageClassName: standard
   image:
     repository: redis
     pullPolicy: IfNotPresent
@@ -21,7 +20,7 @@ redis:
 
 minio:
   enabled: false
-  storageClassName: openebs-hostpath
+  storageClassName: standard
   image:
     repository: quay.io/minio/minio
     pullPolicy: IfNotPresent

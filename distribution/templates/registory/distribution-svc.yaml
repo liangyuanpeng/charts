@@ -4,10 +4,14 @@ metadata:
   name: {{ .Release.Name}}-registry
   labels:
     app: registry
+    distribution-release: {{ .Release.Name}}
 spec:
   ports:
     - port: 5000
       name: registry
-  type: ClusterIP
+      nodePort: {{ .Values.distribution.nodePort }}
+      targetPort: 5000
+  type: NodePort
   selector:
     app: registry
+    distribution-release: {{ .Release.Name}}
