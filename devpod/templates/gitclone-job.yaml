@@ -1,0 +1,26 @@
+# clone metrics server source code on job and write source code to pvc
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-gitclone
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      name: code-kube-rbac-proxy
+      labels:
+        app: code-kube-rbac-proxy
+    spec:
+      volumes:
+      - name: sourcecode
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-pvc
+      containers:
+      - name: git
+        image: bitnami/git:2.37.3-debian-11-r10
+        command: ["sh","-c","git clone https://gitee.com/liangyuanpeng/kube-rbac-proxy.git /sourcecode/kube-rbac-proxy"]
+        volumeMounts:
+          - name: sourcecode
+            mountPath: /sourcecode
+      restartPolicy: OnFailure

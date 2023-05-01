@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: code-server
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: code-server
+  ports:
+  - port: 80
+    targetPort: 3000
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: code-server
+  namespace: default
+  labels:
+    app: code-server
+spec:
+  serviceName: code-server
+  replicas: 1
+  # strategy:
+  #   rollingUpdate:
+  #     maxSurge: 1
+  #     maxUnavailable: 1
+  #   type: RollingUpdate
+  selector:
+    matchLabels:
+      app: code-server
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      # initContainers:
+      # # waitfor  clone source job
+      # - name: waitfor
+      #   image: ghcr.io/liangyuanpeng/waitfor:v1.0.0
+      #   imagePullPolicy: IfNotPresent
+      #   args:
+      #     - --jobname 
+      #     - gitclone
+      containers:
+      - name: code-server
+        # image: gitpod/openvscode-server:1.71.2 #gitpod/workspace-go:2022-09-29-21-23-09 #codercom/code-server
+        image: ghcr.lank8s.cn/liangyuanpeng/openvscode-server:go1.19 #gitpod/workspace-go:2022-09-29-21-23-09 #codercom/code-server
+        # image: gitpod/workspace-go:2022-09-29-21-23-09 #codercom/code-server
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PASSWORD
+          value: "123123"
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+          - name: source
+            mountPath: /source
+      volumes:
+      - name: source 
+        persistentVolumeClaim:
+            claimName: code-metrics-server
+  # volumeClaimTemplates:
+  #   - metadata:
+  #       name: source
+  #     spec:
+  #       storageClassName: local-path
+  #       accessModes: ["ReadWriteOnce"]
+  #       resources:
+  #         requests:
+  #           storage: 1Gi
