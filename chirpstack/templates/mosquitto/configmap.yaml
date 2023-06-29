@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name}}-mosquitto-configmap
+  namespace: {{ .Release.Namespace }}
+data:
+  mosquitto.conf: |
+    # See https://mosquitto.org/man/mosquitto-conf-5.html for a full
+    # configuration example and documentation.
+
+    listener 1883
+    allow_anonymous true
