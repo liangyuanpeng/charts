@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  xline:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-07-05T15:08:16.814258252+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 025d716caff083fd799b2e58602883e105975b3a4c95bb2ad77f466e7570cb19
+    name: xline
+    type: application
+    urls:
+      - oci://ghcr.io/liangyuanpeng/charts/xline
+    version: 0.0.1
   distribution:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -9,7 +20,7 @@ entries:
     name: distribution
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/distribution-0.1.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/distribution
     version: 0.1.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -19,8 +30,18 @@ entries:
     name: distribution
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/distribution-0.2.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/distribution
     version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-04-27T12:00:14.392276035+08:00"
+    description: A Helm chart of cncf project for distribution.
+    digest: 3656ee42ebeb8cdcf6e528d0ce6fb33106c9c73786df877de5e86d410f220aff
+    name: distribution
+    type: application
+    urls:
+      - oci://ghcr.io/liangyuanpeng/charts/distribution
+    version: 0.3.0
   replacer:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -30,7 +51,7 @@ entries:
     name: replacer
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/replacer-0.2.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/replacer
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -40,7 +61,7 @@ entries:
     name: replacer
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/replacer-0.1.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/replacer
     version: 0.1.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -50,7 +71,7 @@ entries:
     name: replacer
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/replacer-0.2.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/replacer
     version: 0.2.0
   mosquitto:
   - apiVersion: v2
@@ -61,7 +82,7 @@ entries:
     name: mosquitto
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/mosquitto-0.1.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/mosquitto
     version: 0.1.0
   chirpstack:
   - apiVersion: v2
@@ -72,7 +93,7 @@ entries:
     name: chirpstack
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-0.5.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/chirpstack
     version: 0.5.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -82,29 +103,8 @@ entries:
     name: chirpstack
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-0.4.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/chirpstack
     version: 0.4.0
-  chirpstack-helm-chart:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2021-12-30T00:11:47.377917697+08:00"
-    description: A Helm chart for Kubernetes
-    digest: f505da9fcf1d0e9397b230d7169f30aed2db307579d25d85976a5d90000b8a23
-    name: chirpstack-helm-chart
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-helm-chart-0.3.0.tgz
-    version: 0.3.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2021-12-30T00:11:47.373972001+08:00"
-    description: A Helm chart for Kubernetes
-    digest: e59871e0ba99ef9f300396ab108e6dd46de4654613c64cfb5cc2a3e758d42b5d
-    name: chirpstack-helm-chart
-    type: application
-    urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-helm-chart-0.2.0.tgz
-    version: 0.2.0
   acme:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -114,7 +114,7 @@ entries:
     name: acme
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/acme-0.1.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/acme
     version: 0.1.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -124,7 +124,7 @@ entries:
     name: acme
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/acme-0.2.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/acme
     version: 0.2.0
   pulsar:
   - apiVersion: v2
@@ -135,7 +135,7 @@ entries:
     name: pulsar
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/pulsar-0.1.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/pulsar
     version: 0.1.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -145,7 +145,7 @@ entries:
     name: pulsar
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/pulsar-0.2.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/pulsar
     version: 0.2.0
   chirpstack-event-forward:
   - apiVersion: v2
@@ -156,7 +156,7 @@ entries:
     name: chirpstack-event-forward
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-event-forward-0.1.0.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/chirpstack-event-forward
     version: 0.1.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -166,6 +166,6 @@ entries:
     name: chirpstack-event-forward
     type: application
     urls:
-    - https://liangyuanpeng.github.io/charts/archives/chirpstack-event-forward-0.1.2.tgz
+    - oci://ghcr.io/liangyuanpeng/charts/chirpstack-event-forward
     version: 0.1.2
 generated: "2021-12-30T00:11:47.343861798+08:00"
