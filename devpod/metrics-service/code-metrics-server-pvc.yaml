@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: code-metrics-server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi #定义要申请的空间大小
+  storageClassName: local-path #这里要和我们定义pv那里storageClassName一样才行

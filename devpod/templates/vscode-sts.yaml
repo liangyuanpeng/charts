@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: code-kube-rbac-proxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: code-kube-rbac-proxy
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: code-kube-rbac-proxy
+  ports:
+  - port: 80
+    targetPort: 3000
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: code-kube-rbac-proxy
+  namespace: default
+  labels:
+    app: code-kube-rbac-proxy
+spec:
+  serviceName: code-kube-rbac-proxy
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-kube-rbac-proxy
+  template:
+    metadata:
+      labels:
+        app: code-kube-rbac-proxy
+    spec:
+      serviceAccountName: {{ .Release.Name }}-devpod
+      initContainers:
+      - name: waitfor
+        image: ghcr.io/liangyuanpeng/waitfor:v1.0.0  # TODO break if can not list resources
+        imagePullPolicy: IfNotPresent
+        args:
+          - --jobname 
+          - {{ .Release.Name }}-gitclone
+      containers:
+      # 第一个container  maquan
+      - name: code-kube-rbac-proxy
+        image: ghcr.lank8s.cn/liangyuanpeng/openvscode-server:go1.19 #gitpod/workspace-go:2022-09-29-21-23-09 #codercom/code-kube-rbac-proxy
+        # image: gitpod/workspace-go:2022-09-29-21-23-09 #codercom/code-kube-rbac-proxy
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PASSWORD
+          value: "123123"
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+          - name: source
+            mountPath: /source
+      - name: otel
+        image: otel/opentelemetry-collector:0.62.1
+        imagePullPolicy: IfNotPresent
+      volumes:
+      - name: source 
+        persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc
