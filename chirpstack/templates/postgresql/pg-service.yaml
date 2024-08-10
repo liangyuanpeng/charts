@@ -9,6 +9,9 @@ spec:
   ports:
     - port: 5432
       name: pgsql
-  type: ClusterIP
+{{ if eq .Values.postgresql.service.type "NodePort" }}
+      nodePort: {{ .Values.postgresql.service.nodePort  }}
+{{ end }}
+  type: {{ .Values.postgresql.service.type }}
   selector:
     app: pgsql

@@ -9,11 +9,14 @@ spec:
   ports:
     - port: 8080
       name: chirpstack-as
+{{ if eq .Values.appserver.service.type "NodePort" }}
+      nodePort: {{ .Values.appserver.service.nodePort  }}
+{{ end }}
     - port: 8001
       name: chirpstack-as-8001
     - port: 8003
       name: chirpstack-as-join
-  type: ClusterIP
+  type: {{ .Values.appserver.service.type  }}
   selector:
     app: chirpstack-as
     # {{- include "chirpstack.matchLabels" . | nindent 4 }}

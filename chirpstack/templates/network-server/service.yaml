@@ -10,7 +10,10 @@ spec:
   ports:
     - port: 8000
       name: chirpstack-ns
-  type: ClusterIP
+{{ if eq .Values.networkserver.service.type "NodePort" }}
+      nodePort: {{ .Values.networkserver.service.nodePort  }}
+{{ end }}
+  type: {{ .Values.networkserver.service.type  }}
   selector:
     app: chirpstack-ns
     # {{- include "chirpstack.matchLabels" . | nindent 4 }}

@@ -16,6 +16,8 @@ appserver:
   image: chirpstack/chirpstack-application-server:3.17
   service:
     name: chirpstack-as
+    type: ClusterIP
+    nodePort: 31010
   ingress:
     enabled: false
     #className: "nginx"
@@ -29,16 +31,20 @@ networkserver:
   image: chirpstack/chirpstack-network-server:3.16
   service: 
     name: chirpstack-ns
+    type: ClusterIP
+    nodePort: 31008
 
 postgresql:
   image: postgres:9.6-alpine
   service:
     name: pgsql
+    type: ClusterIP
+    nodePort: 30432
   spec:
     volumeClaimTemplates:
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: "longhorn"
+        storageClassName: "local-path"
         resources:
           requests:
             storage: 10Gi
@@ -51,7 +57,7 @@ redis:
     volumeClaimTemplates:
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: "longhorn"
+        storageClassName: "local-path"
         resources:
           requests:
             storage: 1Gi
